@@ -32,7 +32,14 @@ app.post('/blog-posts', jsonParser, (req, res) => {
 
   // create new blog post
   const post = BlogPosts.create(req.body.title, req.body.content, req.body.author);
+  console.log("Created new blog post");
   res.status(201).json(post);
+})
+
+app.delete('/blog-posts/:id', jsonParser, (req, res) => {
+  BlogPosts.delete(req.params.id);
+  console.log(`Deleted blog post id ${req.params.id}`);
+  res.status(204).end();
 })
 
 app.listen(process.env.PORT || 8080, () => {
