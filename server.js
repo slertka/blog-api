@@ -42,6 +42,35 @@ app.delete('/blog-posts/:id', jsonParser, (req, res) => {
   res.status(204).end();
 })
 
+app.put('/blog-posts/:id', jsonParser, (req, res) => {
+  // Check 'title', 'content', and 'author' are in body of request
+  const requiredFields = ["title", "content", "author"];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing ${field} in request body`;
+      console.error(message);
+      res.status(400).send(message);
+    }
+  }
+
+  // Check if request id matches body id
+  if (req.body.id !== req.params.id) {
+    const message = `Request path id ${req.params.id} must match the body id ${req.body.id}`;
+    console.error(message);
+    res.status(400).send(message);
+  }
+
+  console.log(`Updating blog post id ${req.params.id}`);
+  BlogPosts.update({
+    id: req.params.id,
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author
+  })
+  res.status(204).end();
+})
+
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
 });
