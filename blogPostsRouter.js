@@ -63,7 +63,7 @@ router.put('/:id', jsonParser, (req, res) => {
     content: req.body.content,
     author: req.body.author
   })
-  res.status(204).end;
+  res.status(204).end();
 })
 
 module.exports = router;
