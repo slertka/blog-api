@@ -67,4 +67,42 @@ describe('Blog Posts', function() {
         expect(res.body).to.deep.equal(Object.assign(newPost, {id: res.body.id, publishDate: res.body.publishDate}));
       })
   })
+
+  // // ------- PUT TEST STRATEGY -------
+  // // 1. create an updated blog post entry with required fields 'title, 'content', 'author', and 'id'
+  // // 2. verify response status is 204
+  // it('should update a blog post on PUT', function() {
+  //   const updatedPost = {
+  //     title: "updated post",
+  //     content: "updated content",
+  //     author: "updated author"
+  //   };
+
+  //   return chai
+  //     .request(app)
+  //     .get('/blog-posts')
+  //     .then(function(res) {
+  //       updatedPost.id = res.body[0].id;
+  //       return chai.request(app).put(`/blog-posts/${updatedPost.id}`).send(updatedPost);
+  //       done();
+  //     })
+  //     .then(function(res) {
+  //       expect(res).to.have.status(204);
+  //     })
+  // })
+
+  // ---------- DELETE TEST STRATEGY
+  // 1. get the id for the post you want to delete
+  // 2. verify response status is 204
+  it('should delete blog post on DELETE', function() {
+    return chai
+      .request(app)
+      .get('/blog-posts')
+      .then(function(res) {
+        return chai.request(app).delete(`/blog-posts/${res.body[0].id}`);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(204);
+      })
+  })
 })
