@@ -39,7 +39,7 @@ router.delete('/:id', jsonParser, (req, res) => {
 
 router.put('/:id', jsonParser, (req, res) => {
   // Check 'title', 'content', and 'author' are in body of request
-  const requiredFields = ["title", "content", "author"];
+  const requiredFields = ["title", "content", "author", "id"];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
